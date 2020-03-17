@@ -2,6 +2,8 @@ FROM nvidia/cuda:10.0-devel-ubuntu18.04
 
 ENV docker_tag=CUDA
 
+ENV LC_ALL=C
+
 RUN useradd docker \
 	&& mkdir /home/docker \
 	&& chown docker:docker /home/docker \
@@ -30,7 +32,16 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD5
 		libopenmpi-dev \
 		r-base-dev \
 		r-recommended \
-		qpdf
+		qpdf \
+		libvtk7-dev
+
+RUN R -e "options(repos='http://cran.rstudio.com'); install.packages(c('optparse','numbers', 'yaml'));" \
+	&& wget https://github.com/llaniewski/rtemplate/archive/master.tar.gz -O rtemplate.tar.gz \
+	&& R CMD INSTALL rtemplate.tar.gz \
+	&& wget https://github.com/llaniewski/gvector/archive/master.tar.gz -O gvector.tar.gz \
+	&& R CMD INSTALL gvector.tar.gz \
+	&& wget https://github.com/llaniewski/polyAlgebra/archive/master.tar.gz -O polyAlgebra.tar.gz \
+	&& R CMD INSTALL polyAlgebra.tar.gz
 
 WORKDIR /home/docker
 USER docker
