@@ -6,20 +6,19 @@ services:
 jobs:
   include:
     - stage: build base
-      env:
-        matrix:
-          - ARCH=cpu
-          - ARCH=gpu
       script:
         - echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USER" --password-stdin
-        - docker build -t cfdgo/tclb:$ARCH-nompi -f Dockerfile.$ARCH .
-        - docker push cfdgo/tclb:$ARCH-nompi
-    - stage: build in openmpi
-      env:
-        matrix:
-          - ARCH=cpu
+        - docker build -t cfdgo/tclb:cpu-nompi -f Dockerfile.cpu .
+        - docker push cfdgo/tclb:cpu-nompi
+      name: CPU
+    - script:
+        - echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USER" --password-stdin
+        - docker build -t cfdgo/tclb:gpu-nompi -f Dockerfile.gpu .
+        - docker push cfdgo/tclb:gpu-nompi
+      name: GPU
+    - stage: build with openmpi
       script:
         - echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USER" --password-stdin
-        - docker build -t cfdgo/tclb:$ARCH-openmpi4 -f Dockerfile.$ARCH.openmpi4 .
-        - docker push cfdgo/tclb:$ARCH-openmpi4
-          
+        - docker build -t cfdgo/tclb:cpu-openmpi4 -f Dockerfile.cpu.openmpi4 .
+        - docker push cfdgo/tclb:cpu-openmpi4
+      name: CPU-OpenMPI 4.0
