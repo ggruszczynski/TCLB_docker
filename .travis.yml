@@ -4,4 +4,6 @@ services:
   - docker
 
 script:
-  - docker build -t cpu -f Dockerfile.cpu .
+  - echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USER" --password-stdin
+  - docker build -t cpu-omp4 -f Dockerfile.cpu .
+  - docker push cfdgo/tclb
