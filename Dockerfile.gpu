@@ -55,6 +55,8 @@ RUN mkdir -p /tmp/ompi \
     && make \
     && make install
 
+RUN ldconfig
+
 WORKDIR /docker_home
 USER docker
 
