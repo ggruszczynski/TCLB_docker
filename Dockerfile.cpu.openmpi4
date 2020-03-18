@@ -1,0 +1,16 @@
+FROM cfdgo/tclb:cpu-nompi
+
+ENV OMPI_VERSION=4.0.1
+
+RUN mkdir -p /tmp/ompi \
+    && cd /tmp/ompi \
+    && wget \
+         -O openmpi-$OMPI_VERSION.tar.bz2 \
+         https://download.open-mpi.org/release/open-mpi/v4.0/openmpi-$OMPI_VERSION.tar.bz2 \
+    && tar -xjf openmpi-$OMPI_VERSION.tar.bz2 \
+    && cd /tmp/ompi/openmpi-$OMPI_VERSION \
+    && ./configure \
+    && make \
+    && make install
+
+RUN ldconfig

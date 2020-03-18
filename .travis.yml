@@ -3,7 +3,23 @@ language: c
 services:
   - docker
 
-script:
-  - echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USER" --password-stdin
-  - docker build -t cpu-omp4 -f Dockerfile.cpu .
-  - docker push cfdgo/tclb
+jobs:
+  include:
+    - stage: build base
+      env:
+        matrix:
+          - ARCH=cpu
+          - ARCH=gpu
+      script:
+        - echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USER" --password-stdin
+        - docker build -t cfdgo/tclb:$ARCH-nompi -f Dockerfile.$ARCH .
+        - docker push cfdgo/tclb:$ARCH-nompi
+    - stage: build in openmpi
+      env:
+        matrix:
+          - ARCH=cpu
+      script:
+        - echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USER" --password-stdin
+        - docker build -t cfdgo/tclb:$ARCH-openmpi4 -f Dockerfile.$ARCH.openmpi4 .
+        - docker push cfdgo/tclb:$ARCH-openmpi4
+          
