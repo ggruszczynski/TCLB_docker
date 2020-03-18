@@ -4,4 +4,4 @@ services:
   - docker
 
 script:
-  - docker build -f Dockerfile.cpu
+  - docker build -t cpu -f Dockerfile.cpu .
