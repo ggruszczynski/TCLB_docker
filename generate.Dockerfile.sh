@@ -108,7 +108,7 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD5
 		ed \\
 		less \\
 		locales \\
-		vim-tiny \\
+		vim \\
 		wget \\
 		ca-certificates \\
 		fonts-texgyre \\
@@ -120,8 +120,7 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD5
 		joe \\
 		r-base-dev \\
 		r-recommended \\
-		qpdf \\
-		libvtk7-dev
+		qpdf
 
 RUN R -e "options(repos='http://cran.rstudio.com'); install.packages(c('optparse','numbers', 'yaml'));" \\
 	&& wget https://github.com/llaniewski/rtemplate/archive/master.tar.gz -O rtemplate.tar.gz \\
