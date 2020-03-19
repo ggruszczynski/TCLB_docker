@@ -8,17 +8,48 @@ jobs:
     - stage: build base
       script:
         - echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USER" --password-stdin
-        - docker build -t cfdgo/tclb:cpu-nompi -f Dockerfile.cpu .
+        - ./generate.Dockerfile.sh cpu | docker build --pull --tag cfdgo/tclb:cpu-nompi -
         - docker push cfdgo/tclb:cpu-nompi
-      name: CPU
-    - script:
-        - echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USER" --password-stdin
-        - docker build -t cfdgo/tclb:gpu-nompi -f Dockerfile.gpu .
-        - docker push cfdgo/tclb:gpu-nompi
-      name: GPU
-    - stage: build with openmpi
+      name: cpu
+    - stage: build base
       script:
         - echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USER" --password-stdin
-        - docker build -t cfdgo/tclb:cpu-openmpi4 -f Dockerfile.cpu.openmpi4 .
-        - docker push cfdgo/tclb:cpu-openmpi4
-      name: CPU-OpenMPI 4.0
+        - ./generate.Dockerfile.sh gpu | docker build --pull --tag cfdgo/tclb:gpu-nompi -
+        - docker push cfdgo/tclb:gpu-nompi
+      name: gpu
+    - stage: build with MPI
+      script:
+        - echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USER" --password-stdin
+        - ./generate.Dockerfile.sh cpu openmpi4.0 | docker build --pull --tag cfdgo/tclb:cpu-openmpi4.0 -
+        - docker push cfdgo/tclb:cpu-openmpi4.0
+      name: cpu with openmpi4.0
+    - stage: build with MPI
+      script:
+        - echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USER" --password-stdin
+        - ./generate.Dockerfile.sh cpu openmpi3.1 | docker build --pull --tag cfdgo/tclb:cpu-openmpi3.1 -
+        - docker push cfdgo/tclb:cpu-openmpi3.1
+      name: cpu with openmpi3.1
+    - stage: build with MPI
+      script:
+        - echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USER" --password-stdin
+        - ./generate.Dockerfile.sh cpu openmpi3.0 | docker build --pull --tag cfdgo/tclb:cpu-openmpi3.0 -
+        - docker push cfdgo/tclb:cpu-openmpi3.0
+      name: cpu with openmpi3.0
+    - stage: build with MPI
+      script:
+        - echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USER" --password-stdin
+        - ./generate.Dockerfile.sh gpu openmpi4.0 | docker build --pull --tag cfdgo/tclb:gpu-openmpi4.0 -
+        - docker push cfdgo/tclb:gpu-openmpi4.0
+      name: gpu with openmpi4.0
+    - stage: build with MPI
+      script:
+        - echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USER" --password-stdin
+        - ./generate.Dockerfile.sh gpu openmpi3.1 | docker build --pull --tag cfdgo/tclb:gpu-openmpi3.1 -
+        - docker push cfdgo/tclb:gpu-openmpi3.1
+      name: gpu with openmpi3.1
+    - stage: build with MPI
+      script:
+        - echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USER" --password-stdin
+        - ./generate.Dockerfile.sh gpu openmpi3.0 | docker build --pull --tag cfdgo/tclb:gpu-openmpi3.0 -
+        - docker push cfdgo/tclb:gpu-openmpi3.0
+      name: gpu with openmpi3.0
