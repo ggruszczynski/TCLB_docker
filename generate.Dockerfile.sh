@@ -130,6 +130,12 @@ RUN R -e "options(repos='http://cran.rstudio.com'); install.packages(c('optparse
 	&& wget https://github.com/llaniewski/polyAlgebra/archive/master.tar.gz -O polyAlgebra.tar.gz \\
 	&& R CMD INSTALL polyAlgebra.tar.gz
 
+RUN mkdir -p /tmp/ofed \\
+	&& wget http://www.mellanox.com/downloads/ofed/MLNX_OFED-5.0-1.0.0.0/MLNX_OFED_SRC-debian-5.0-1.0.0.0.tgz \\
+	&& tar xzf MLNX_OFED_SRC-debian-5.0-1.0.0.0.tgz \\
+	&& cd MLNX_OFED_SRC-5.0-1.0.0.0 \\
+	&& ./install.pl --with-core-mod --with-user_mad-mod --with-user_access-mod --with-addr_trans-mod --with-mlxfw-mod --with-mlx4-mod --with-mlx4_en-mod --with-mlx5-mod --with-ipoib-mod --with-innova-flex --with-iser-mod --with-e_ipoib-mod --with-isert-mod
+
 RUN ldconfig
 
 CMD ["bash"]
