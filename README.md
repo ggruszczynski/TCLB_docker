@@ -15,5 +15,5 @@ Singularity> logout
 
 In batch script:
 ```
-mpirun singularity exec tclb.sif TCLB/CLB/d2q9/main file.xml
+mpirun singularity exec --nv tclb.sif TCLB/CLB/d2q9/main file.xml
 ```
