@@ -9,6 +9,8 @@ ENV TSD=/opt/TCLB_STABLE
 ENV ADIOS_PATH=/opt/ADIOS
 
 
+
+RUN apt-add-repository 'deb https://apt.kitware.com/ubuntu/ xenial main'
 RUN apt-get -y update
 RUN apt-get -y install cmake
 RUN cd /opt && git clone https://github.com/mdzik/TCLB_singularity
