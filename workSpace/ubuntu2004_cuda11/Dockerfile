@@ -1,4 +1,4 @@
-FROM mdzik/tclb_docker:buildKit_ubuntu2004_cuda11
+FROM mdzik/tclb_docker:buildkit_ubuntu2004_cuda11
 
 
 RUN apt-get install -y curl 
@@ -28,8 +28,8 @@ RUN apt-get install -y pip nodejs
 
 RUN pip install numpy sympy pandas matplotlib h5py jupyterlab 
 
-RUN mkdir /opt/paraview && cd /opt/paraview && wget 'https://www.paraview.org/paraview-downloads/download.php?submit=Download&version=v5.9&type=binary&os=Linux&downloadFile=ParaView-5.9.1-osmesa-MPI-Linux-Python3.8-64bit.tar.gz' -O  ParaView-5.9.1-osmesa-MPI-Linux-Python3.8-64bit.tar.gz  && tar -zxf ParaView-5.9.1-osmesa-MPI-Linux-Python3.8-64bit.tar.gz && rm ParaView-5.9.1-osmesa-MPI-Linux-Python3.8-64bit.tar.gz
-
+RUN mkdir -p /opt/paraview && cd /opt/paraview && wget 'https://www.paraview.org/paraview-downloads/download.php?submit=Download&version=v5.9&type=binary&os=Linux&downloadFile=ParaView-5.9.1-osmesa-MPI-Linux-Python3.8-64bit.tar.gz' -O  ParaView-5.9.1-osmesa-MPI-Linux-Python3.8-64bit.tar.gz  && tar -zxf ParaView-5.9.1-osmesa-MPI-Linux-Python3.8-64bit.tar.gz && rm ParaView-5.9.1-osmesa-MPI-Linux-Python3.8-64bit.tar.gz
+ 
 RUN apt-get install -y python3-venv
 
 RUN python3 -m venv /opt/paraview/venv
@@ -37,6 +37,12 @@ RUN pip install virtualenv
 RUN virtualenv /opt/paraview/venv
 
 RUN cd /tmp && git clone https://github.com/Kitware/visualizer.git && cd visualizer && npm update && npm  install && npm run build && npm link
+
+RUN . /opt/paraview/venv/bin/activate && pip install cryptography
+
+ENV VTK_DISABLE_VISRTX=1
+ENV VTK_DISABLE_OSPRAY=1
+#RUN wget 'https://www.paraview.org/paraview-downloads/download.php?submit=Download&version=v5.9&type=source&os=Sources&downloadFile=ParaView-v5.9.1.tar.xz' -O ParaView-v5.9.1.tar.xz && tar -Jxf 
 
 #RUN pip install pvlink nodejs
 #RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager 
