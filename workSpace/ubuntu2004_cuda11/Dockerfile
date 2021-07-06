@@ -1,10 +1,9 @@
 FROM mdzik/tclb_docker:buildkit_ubuntu2004_cuda11
 
 
-RUN apt-get install -y curl 
+RUN apt-get install -y  curl && apt-get clean
 RUN curl -sL https://deb.nodesource.com/setup_12.x |  bash -
-
-RUN apt-get install -y pip nodejs
+RUN apt-get install -y  pip nodejs && apt-get clean
 
 #RUN npm install -g pvw-visualizer
 
@@ -26,24 +25,47 @@ RUN apt-get install -y pip nodejs
 
 #RUN find /opt/miniconda/bin -type f -exec chmod o+x {} \;
 
-RUN pip install numpy sympy pandas matplotlib h5py jupyterlab 
+RUN pip install --no-cache-dir numpy sympy pandas matplotlib h5py jupyterlab itkwidgets vtk lxml
 
-RUN mkdir -p /opt/paraview && cd /opt/paraview && wget 'https://www.paraview.org/paraview-downloads/download.php?submit=Download&version=v5.9&type=binary&os=Linux&downloadFile=ParaView-5.9.1-osmesa-MPI-Linux-Python3.8-64bit.tar.gz' -O  ParaView-5.9.1-osmesa-MPI-Linux-Python3.8-64bit.tar.gz  && tar -zxf ParaView-5.9.1-osmesa-MPI-Linux-Python3.8-64bit.tar.gz && rm ParaView-5.9.1-osmesa-MPI-Linux-Python3.8-64bit.tar.gz
- 
-RUN apt-get install -y python3-venv
+RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager jupyter-matplotlib jupyterlab-datawidgets itkwidgets
 
-RUN python3 -m venv /opt/paraview/venv
-RUN pip install virtualenv
-RUN virtualenv /opt/paraview/venv
+#RUN mkdir -p /opt/paraview && cd /opt/paraview && wget 'https://www.paraview.org/paraview-downloads/download.php?submit=Download&version=v5.9&type=binary&os=Linux&downloadFile=ParaView-5.9.1-osmesa-MPI-Linux-Python3.8-64bit.tar.gz' -O  ParaView-5.9.1-osmesa-MPI-Linux-Python3.8-64bit.tar.gz  && tar -zxf ParaView-5.9.1-osmesa-MPI-Linux-Python3.8-64bit.tar.gz && rm ParaView-5.9.1-osmesa-MPI-Linux-Python3.8-64bit.tar.gz
 
-RUN cd /tmp && git clone https://github.com/Kitware/visualizer.git && cd visualizer && npm update && npm  install && npm run build && npm link
 
-RUN . /opt/paraview/venv/bin/activate && pip install cryptography
 
-ENV VTK_DISABLE_VISRTX=1
-ENV VTK_DISABLE_OSPRAY=1
+#RUN apt-get install -y python3-venv
+
+#RUN python3 -m venv /opt/paraview/venv
+#RUN pip install virtualenv
+#RUN virtualenv /opt/paraview/venv
+
+#RUN cd /tmp && git clone https://github.com/Kitware/visualizer.git && cd visualizer && npm update && npm  install && npm run build && npm link
+
+#RUN . /opt/paraview/venv/bin/activate && pip install cryptography
+
+#ENV VTK_DISABLE_VISRTX=1
+#ENV VTK_DISABLE_OSPRAY=1
+
+#RUN jupyter labextension enable
+
+#RUN pip install jupyter-server-proxy vtk
+#RUN jupyter labextension install @jupyterlab/server-proxy
+
+
+
+
+#RUN apt-get install -y mc vim 
+
+#ADD testdata /root/
+
+#ADD jupyter_notebook_config.py /usr/local/etc/jupyter/jupyter_notebook_config.py
+
+#ADD ParaView_Logo.svg /root/ParaView_Logo.svg
+
 #RUN wget 'https://www.paraview.org/paraview-downloads/download.php?submit=Download&version=v5.9&type=source&os=Sources&downloadFile=ParaView-v5.9.1.tar.xz' -O ParaView-v5.9.1.tar.xz && tar -Jxf 
 
 #RUN pip install pvlink nodejs
 #RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager 
 #RUN jupyter labextension install pvlink
+
+RUN apt-get clean -y
