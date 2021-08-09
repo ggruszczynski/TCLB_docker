@@ -4,7 +4,7 @@ FROM mdzik/tclb_docker:buildkit_ubuntu2004_cuda11
 RUN apt-get install -y  curl && apt-get clean
 RUN curl -sL https://deb.nodesource.com/setup_12.x |  bash -
 
-RUN apt-get install -y  pip && apt-get clean
+RUN apt-get install -y  pip  nodejs && apt-get clean
 
 #RUN npm install -g pvw-visualizer
 
