@@ -1,5 +1,6 @@
 FROM mdzik/tclb_docker:buildkit_ubuntu2004_cuda11
 
+RUN apt-get update
 
 RUN apt-get install -y  curl && apt-get clean
 RUN curl -sL https://deb.nodesource.com/setup_12.x |  bash -
