@@ -27,7 +27,7 @@ RUN apt-get install -y pip nodejs python3-nlopt libnlopt-dev default-jre && apt-
 
 #RUN find /opt/miniconda/bin -type f -exec chmod o+x {} \;
 
-RUN pip install --no-cache-dir numpy sympy pandas matplotlib h5py jupyterlab itkwidgets vtk lxml numba display_xml
+RUN pip install --no-cache-dir numpy sympy pandas matplotlib h5py jupyterlab itkwidgets vtk lxml numba display_xml scipy
 
 RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager jupyter-matplotlib jupyterlab-datawidgets itkwidgets
 

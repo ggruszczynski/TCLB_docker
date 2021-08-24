@@ -4,11 +4,11 @@ on:
   push:
     branches: [ master ]
     paths:
-      - 'core/**'
-      - 'buildKit/**'
+
+      - 'workSpace/**'
 jobs:
 
-  build-core:
+  build-workspace:
     runs-on: ubuntu-latest
     steps:
       -
@@ -31,18 +31,10 @@ jobs:
         id: date
         run: echo "::set-output name=date::$(date +%s)"
       -
-        name: Build Core
+        name: Build Workspace
         uses: docker/build-push-action@v2
         with:
-          context: ./core/ubuntu2004
+          context: ./workSpace/ubuntu2004
           platforms: linux/amd64
           push: true
-          tags: mdzik/tclb_core:latest,mdzik/tclb_core:${{ steps.date.outputs.date }}
-      -
-        name: Build BuildKit
-        uses: docker/build-push-action@v2
-        with:
-          context: ./buildKit/ubuntu2004
-          platforms: linux/amd64
-          push: true
-          tags: mdzik/tclb_buildkit:latest,mdzik/tclb_buildkit:${{ steps.date.outputs.date }}
+          tags: mdzik/tclb_workspace:latest,mdzik/tclb_workspace:${{ steps.date.outputs.date }}
