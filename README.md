@@ -3,7 +3,7 @@ Docker recipies for TCLB
 
 ## Singularity
 ```
-singularity build tclb.sif docker://mdzik/tclb_docker:buildkit_ubuntu2004_cuda11
+singularity build tclb.sif docker://mdzik/tclb_buildkit:latest
 ./tclb.sif
 Singularity> git clone https://github.com/CFD-GO/TCLB.git
 Singularity> cd TCLB
