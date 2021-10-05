@@ -1,5 +1,7 @@
 FROM mdzik/tclb_docker:buildkit_ubuntu2004_cuda11
 
+RUN cd /opt && ( curl -sL https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.tar.gz | tar -zx )
+
 RUN apt-get update
 
 RUN apt-get install -y  curl && apt-get clean
@@ -31,7 +33,9 @@ RUN pip install --no-cache-dir numpy sympy pandas matplotlib h5py jupyterlab itk
 
 RUN jupyter labextension install @jupyter-widgets/jupyterlab-manager jupyter-matplotlib jupyterlab-datawidgets itkwidgets
 
-RUN mkdir -p /opt/paraview && cd /opt/paraview && wget 'https://www.paraview.org/paraview-downloads/download.php?submit=Download&version=v5.9&type=binary&os=Linux&downloadFile=ParaView-5.9.1-osmesa-MPI-Linux-Python3.8-64bit.tar.gz' -O  ParaView-5.9.1-osmesa-MPI-Linux-Python3.8-64bit.tar.gz  && tar -zxf ParaView-5.9.1-osmesa-MPI-Linux-Python3.8-64bit.tar.gz && rm ParaView-5.9.1-osmesa-MPI-Linux-Python3.8-64bit.tar.gz
+#RUN mkdir -p /opt/paraview && cd /opt/paraview && wget 'https://www.paraview.org/paraview-downloads/download.php?submit=Download&version=v5.9&type=binary&os=Linux&downloadFile=ParaView-5.9.1-osmesa-MPI-Linux-Python3.8-64bit.tar.gz' -O  ParaView-5.9.1-osmesa-MPI-Linux-Python3.8-64bit.tar.gz  && tar -zxf ParaView-5.9.1-osmesa-MPI-Linux-Python3.8-64bit.tar.gz && rm ParaView-5.9.1-osmesa-MPI-Linux-Python3.8-64bit.tar.gz
+#ENV VTK_DISABLE_VISRTX=1
+#ENV VTK_DISABLE_OSPRAY=1
 
 
 #RUN apt-get install -y python3-venv
@@ -41,8 +45,6 @@ RUN mkdir -p /opt/paraview && cd /opt/paraview && wget 'https://www.paraview.org
 #RUN cd /tmp && git clone https://github.com/Kitware/visualizer.git && cd visualizer && npm update && npm  install && npm run build && npm link
 #RUN . /opt/paraview/venv/bin/activate && pip install cryptography
 
-ENV VTK_DISABLE_VISRTX=1
-ENV VTK_DISABLE_OSPRAY=1
 
 #RUN jupyter labextension enable
 
