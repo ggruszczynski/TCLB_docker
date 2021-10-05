@@ -1,6 +1,5 @@
 FROM mdzik/tclb_docker:buildkit_ubuntu2004_cuda11
 
-RUN cd /opt && ( curl -sL https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.tar.gz | tar -zx )
 
 RUN apt-get update
 
@@ -8,6 +7,8 @@ RUN apt-get install -y  curl && apt-get clean
 RUN curl -sL https://deb.nodesource.com/setup_12.x |  bash -
 
 RUN apt-get install -y pip nodejs python3-nlopt libnlopt-dev default-jre && apt-get clean
+
+RUN cd /opt && ( curl -sL https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.tar.gz | tar -zx )
 
 #RUN npm install -g pvw-visualizer
 
