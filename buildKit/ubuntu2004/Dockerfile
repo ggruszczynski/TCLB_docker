@@ -1,4 +1,4 @@
-FROM mdzik/tclb_core:latest
+FROM mdzik/tclb_core:ubuntu_2004_latest
 
 ENV LC_ALL=C
 ENV PATH=/TCLB:/usr/local/cuda-11.0/bin:$PATH

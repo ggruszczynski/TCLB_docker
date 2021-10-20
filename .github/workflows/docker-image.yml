@@ -31,18 +31,51 @@ jobs:
         id: date
         run: echo "::set-output name=date::$(date +%s)"
       -
-        name: Build Core
+        name: Build Core CPU Ubuntu 20.04
         uses: docker/build-push-action@v2
         with:
           context: ./core/ubuntu2004
           platforms: linux/amd64
           push: true
-          tags: mdzik/tclb_core:latest,mdzik/tclb_core:${{ steps.date.outputs.date }}
+          tags: mdzik/tclb_core:ubuntu_2004_latest,mdzik/tclb_core:ubuntu_2004_${{ steps.date.outputs.date }}
       -
-        name: Build BuildKit
+        name: Build BuildKit CPU Ubuntu 20.04
         uses: docker/build-push-action@v2
         with:
           context: ./buildKit/ubuntu2004
           platforms: linux/amd64
           push: true
-          tags: mdzik/tclb_buildkit:latest,mdzik/tclb_buildkit:${{ steps.date.outputs.date }}
+          tags: mdzik/tclb_buildkit:ubuntu_2004_latest,mdzik/tclb_buildkit:ubuntu_2004_${{ steps.date.outputs.date }},mdzik/tclb_buildkit:cpu_latest
+      -
+        name: Build Core CUDA Ubuntu 20.04
+        uses: docker/build-push-action@v2
+        with:
+          context: ./core/ubuntu2004_cuda11
+          platforms: linux/amd64
+          push: true
+          tags: mdzik/tclb_core:ubuntu_2004_cuda11_latest,mdzik/tclb_core:ubuntu_2004_cuda11_${{ steps.date.outputs.date }}
+      -
+        name: Build BuildKit CUDA Ubuntu 20.04
+        uses: docker/build-push-action@v2
+        with:
+          context: ./buildKit/ubuntu2004_cuda11
+          platforms: linux/amd64
+          push: true
+          tags: mdzik/tclb_buildkit:ubuntu_2004_cuda11_latest,mdzik/tclb_buildkit:ubuntu_2004_cuda11_${{ steps.date.outputs.date }}, mdzik/tclb_buildkit:latest
+      -
+        name: Build Core CUDA Ubuntu 16.04
+        uses: docker/build-push-action@v2
+        with:
+          context: ./core/ubuntu1604_cuda10
+          platforms: linux/amd64
+          push: true
+          tags: mdzik/tclb_core:ubuntu_1604_cuda10_latest,mdzik/tclb_core:ubuntu_1604_cuda10_${{ steps.date.outputs.date }}
+      -
+        name: Build BuildKit CUDA Ubuntu 16.04
+        uses: docker/build-push-action@v2
+        with:
+          context: ./buildKit/ubuntu1604_cuda10
+          platforms: linux/amd64
+          push: true
+          tags: mdzik/tclb_buildkit:ubuntu_1604_cuda10_latest,mdzik/tclb_buildkit:ubuntu_1604_cuda10_${{ steps.date.outputs.date }}
+

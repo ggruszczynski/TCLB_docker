@@ -1,4 +1,4 @@
-FROM mdzik/tclb_docker:core_ubuntu2004_cuda11
+FROM mdzik/tclb_core:ubuntu_2004_cuda11_latest
 
 ENV LC_ALL=C
 ENV PATH=/TCLB:/usr/local/cuda-11.0/bin:$PATH
