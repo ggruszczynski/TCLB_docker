@@ -13,11 +13,18 @@ Docker recipies for TCLB, hosted at https://hub.docker.com/u/mdzik
 ```bash
 git clone https://github.com/mdzik/TCLB_docker.git
 cd TCLB_docker
+```
+now you need to set path to your TCLB clone repo (cloned fork probably)
+```
 echo TCLBBUILDPATH=path/to/TCLB > .local/config_all
+```
+and you are good to go
+```
 source activate workspace_cpu
-cd $BUILDPATH
-scmd ./configure XXXXX
+cd $TCLBBUILDPATH
+scmd ./configure $CONFIGUREARGS 
 make d2q9
+tclb d2q9 ./examples/flow/karman.xml
 ```
 
 
