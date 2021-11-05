@@ -1,0 +1,155 @@
+#!/bin/bash
+
+
+case $1 in
+    "workspace_cpu" | "buildkit_cpu" | "buildkit_gpu")    
+        echo "Activating $1 TCLB Environment"
+        if make $1;
+        then
+            . .local/config_$1
+
+            SHELLCMD="singularity exec $SIF "
+
+            if [[ "$1" == "workspace_cpu" ]];
+            then
+                function jupyterlab() {
+                    . workSpace/bash_shortcuts.sh
+                    scmd jupyter-lab --port=8888 --no-browser --allow-root
+                    deactivate
+                }
+            fi
+
+
+            function scmd {
+                eval $SHELLCMD $@
+            }
+
+            function make {
+                MYPATH=$(pwd)
+                print $MYPATH
+                eval  cd $BUILDPATH
+                eval  $SHELLCMD make $@
+                eval cd $MYPATH
+            }
+
+
+            function tclb() {
+                scmd  $BUILDPATH/CLB/$1/main $2
+            }
+
+            function tclbmpi() {
+                scmd mpirun $BUILDPATH/CLB/$1/main $2
+            }
+
+            function R() {
+                scmd R "$0"
+            }
+
+            function tclb_help() {
+                echo "scmd COMMAND - run COMMAND inside TCLB singularity environment"
+                echo "tclb MODEL FILE ARGS - run CLB/MODEL/main FILE ARGS inside TCLB singularity environment"
+                echo "tclbmpi MODEL FILE ARGS - run mpirun CLB/MODEL/main FILE ARGS inside TCLB singularity environment"
+                echo "R ARGS - run R inside TCLB singularity environment"
+                echo "make ARGS - run make ARGS inside singularity environment in TCLB path (current path is ignored)"
+                echo "deactivate - clear environment"
+                echo "tclb_help - print this message"
+
+            }
+
+
+            # Begin of Environment script, after Python VENV/bin/activate
+            # This file must be used with "source bin/activate" *from bash*
+            # you cannot run it directly
+
+            deactivate () {
+                # # reset old environment variables
+                # if [ -n "${_OLD_VIRTUAL_PATH:-}" ] ; then
+                #     PATH="${_OLD_VIRTUAL_PATH:-}"
+                #     export PATH
+                #     unset _OLD_VIRTUAL_PATH
+                # fi
+                # if [ -n "${_OLD_VIRTUAL_PYTHONHOME:-}" ] ; then
+                #     PYTHONHOME="${_OLD_VIRTUAL_PYTHONHOME:-}"
+                #     export PYTHONHOME
+                #     unset _OLD_VIRTUAL_PYTHONHOME
+                # fi
+
+                # This should detect bash and zsh, which have a hash command that must
+                # be called to get it to forget past commands.  Without forgetting
+                # past commands the $PATH changes we made may not be respected
+                if [ -n "${BASH:-}" -o -n "${ZSH_VERSION:-}" ] ; then
+                    hash -r 2> /dev/null
+                fi
+
+                if [ -n "${_OLD_VIRTUAL_PS1:-}" ] ; then
+                    PS1="${_OLD_VIRTUAL_PS1:-}"
+                    export PS1
+                    unset _OLD_VIRTUAL_PS1
+                fi
+
+                #unset VIRTUAL_ENV
+                if [ ! "${1:-}" = "nondestructive" ] ; then
+                # Self destruct!
+                    unset -f deactivate
+                    unset -f  tclb_setup
+                    unset -f  scmd 
+                    unset -f  make 
+                    unset -f  tclb
+                    unset -f  tclbmpi
+                    unset -f  R
+                fi
+            }
+
+            # unset irrelevant variables
+            deactivate nondestructive
+
+            #VIRTUAL_ENV="/home/mdzik/icm/coldfront-icm/venv/"
+            #export VIRTUAL_ENV
+
+            #_OLD_VIRTUAL_PATH="$PATH"
+            #PATH="$VIRTUAL_ENV/bin:$PATH"
+            #export PATH
+
+            # unset PYTHONHOME if set
+            # this will fail if PYTHONHOME is set to the empty string (which is bad anyway)
+            # could use `if (set -u; : $PYTHONHOME) ;` in bash
+            #if [ -n "${PYTHONHOME:-}" ] ; then
+            #    _OLD_VIRTUAL_PYTHONHOME="${PYTHONHOME:-}"
+            #    unset PYTHONHOME
+            #fi
+
+
+            _OLD_VIRTUAL_PS1="${PS1:-}"
+            PS1="(TCLB:$TCLB_ENV) ${PS1:-}"
+            export PS1
+
+
+            # This should detect bash and zsh, which have a hash command that must
+            # be called to get it to forget past commands.  Without forgetting
+            # past commands the $PATH changes we made may not be respected
+            if [ -n "${BASH:-}" -o -n "${ZSH_VERSION:-}" ] ; then
+                hash -r 2> /dev/null
+            fi
+            echo "======================================================================"
+            echo "Remember to put path to TCLB source code into .local/config_all file!!"
+            echo "======================================================================"
+           
+            if [[ "$1" == "workspace_cpu" ]];
+            then
+                echo "======================================================================"
+                echo "This is WorkSpace edition: juperlab command is avalible"
+                echo "======================================================================"
+            fi
+
+            tclb_help
+
+
+
+        fi
+    ;;
+    *)
+    echo "Options: workspace, buildkit_cpu, buildkit_gpu"
+    
+esac
+
+
