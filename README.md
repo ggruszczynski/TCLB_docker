@@ -20,7 +20,7 @@ echo TCLBBUILDPATH=path/to/TCLB > .local/config_all
 ```
 and you are good to go
 ```
-source activate workspace_cpu
+source ./activate workspace_cpu
 cd $TCLBBUILDPATH
 scmd ./configure $CONFIGUREARGS 
 make d2q9
