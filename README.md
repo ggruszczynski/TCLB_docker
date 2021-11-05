@@ -6,7 +6,7 @@ Docker recipies for TCLB, hosted at https://hub.docker.com/u/mdzik
 - buildkit images should suffice to build full-futered TCLB
 - workspace CPU only are intendet for workshops, they include jupyter bindings. See also mdzik/TCLB_binder repo
 
-#Simple use
+# Simple use
 
 - install Singularity (https://sylabs.io/guides/3.8/user-guide/quick_start.html#quick-installation-steps)
 - clone this repo
@@ -16,7 +16,8 @@ cd TCLB_docker
 echo TCLBBUILDPATH=path/to/TCLB > .local/config_all
 source activate workspace_cpu
 cd $BUILDPATH
-
+scmd ./configure XXXXX
+make d2q9
 ```
 
 
