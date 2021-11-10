@@ -1,5 +1,10 @@
 localdir = .local
 
+activate:
+	echo "#!/bin/bash" > "activate"
+	echo ENVDIR=$$(pwd) >> "activate"
+	cat ./activate.template >> "activate"
+
 $(localdir)/config_all:
 	mkdir -p $(localdir)
 	echo BUILDPATH=path_to_your_TCLB_dir > "$(localdir)/config_all"

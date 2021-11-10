@@ -1,9 +1,10 @@
-#!/bin/bash
-
 
 case $1 in
     "workspace_cpu" | "buildkit_cpu" | "buildkit_gpu")    
         echo "Activating $1 TCLB Environment"
+        WD=$(pwd)
+        echo $WD
+        cd $ENVDIR
         if make $1;
         then
             . .local/config_$1
@@ -13,7 +14,7 @@ case $1 in
             if [[ "$1" == "workspace_cpu" ]];
             then
                 function jupyterlab() {
-                    . workSpace/bash_shortcuts.sh
+                    .  $ENVDIR/workSpace/bash_shortcuts.sh
                     scmd jupyter-lab --port=8888 --no-browser --allow-root
                     deactivate
                 }
@@ -142,6 +143,8 @@ case $1 in
             fi
 
             tclb_help
+
+            cd $WD
 
 
 
