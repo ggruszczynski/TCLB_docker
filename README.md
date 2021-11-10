@@ -21,7 +21,11 @@ make activate
 ```
 and you are good to go
 ```
+<<<<<<< HEAD
 source /path/to/TCLB_docker/activate workspace_cpu
+=======
+source ./activate workspace_cpu
+>>>>>>> 8f3b9e85b7fffc807d6f679c2303dd82674df884
 cd $TCLBBUILDPATH
 scmd ./configure $CONFIGUREARGS 
 make d2q9
