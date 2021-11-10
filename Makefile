@@ -7,16 +7,16 @@ activate:
 
 $(localdir)/config_all:
 	mkdir -p $(localdir)
-	echo BUILDPATH=path_to_your_TCLB_dir > "$(localdir)/config_all"
+	echo "export BUILDPATH=path_to_your_TCLB_dir" > "$(localdir)/config_all"
 
-$(localdir)/tclb_%: $(localdir)/config_all
+$(localdir)/tclb_%:
 	singularity build $@ docker://mdzik/$$(echo $@ | sed 's/__/:/g' | sed 's/.*\///g')
 
 $(localdir)/config_%: $(localdir)/config_all 
 	echo ". config_all" > $@
-	echo SIF=`pwd`"/$$(echo $@ | sed 's/config/tclb/g')" > $@
-	echo TCLB_ENV="$$(echo $@ | sed 's/config/tclb/g' | sed 's/.*\///g')"  >> $@
-	echo CONFIGUREARGS="\"$(configureargs)\"" >> $@
+	echo export SIF=`pwd`"/$$(echo $@ | sed 's/config/tclb/g')" > $@
+	echo export TCLB_ENV="$$(echo $@ | sed 's/config/tclb/g' | sed 's/.*\///g')"  >> $@
+	echo export CONFIGUREARGS="\"$(configureargs)\"" >> $@
 
 build_and_configure_$(imname)__$(imtag): 
 	export configureargs

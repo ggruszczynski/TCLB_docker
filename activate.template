@@ -7,6 +7,7 @@ case $1 in
         cd $ENVDIR
         if make $1;
         then
+            . .local/config_all
             . .local/config_$1
 
             SHELLCMD="singularity exec $SIF "
@@ -27,12 +28,11 @@ case $1 in
 
             function make {
                 MYPATH=$(pwd)
-                print $MYPATH
+                echo "Buildpath: " $BUILDPATH
                 eval  cd $BUILDPATH
                 eval  $SHELLCMD make $@
                 eval cd $MYPATH
             }
-
 
             function tclb() {
                 scmd  $BUILDPATH/CLB/$1/main $2
@@ -96,6 +96,7 @@ case $1 in
                     unset -f  scmd 
                     unset -f  make 
                     unset -f  tclb
+                    unset -f  tclb_help
                     unset -f  tclbmpi
                     unset -f  R
                 fi
@@ -104,6 +105,14 @@ case $1 in
             # unset irrelevant variables
             deactivate nondestructive
 
+            export -f deactivate
+            export -f  tclb_setup
+            export -f  scmd 
+            export -f  make 
+            export -f  tclb
+            export -f  tclb_help
+            export -f  tclbmpi
+            export -f  R
             #VIRTUAL_ENV="/home/mdzik/icm/coldfront-icm/venv/"
             #export VIRTUAL_ENV
 
