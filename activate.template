@@ -9,6 +9,7 @@ case $1 in
         then
             . .local/config_all
             . .local/config_$1
+            export PYTHONPATH="$PYTHONPATH:$TCLB_TOOLS_PATH/Python"
 
             SHELLCMD="singularity exec $SIF "
 
@@ -16,7 +17,7 @@ case $1 in
             then
                 function jupyterlab() {
                     .  $ENVDIR/workSpace/bash_shortcuts.sh
-                    scmd jupyter-lab --port=8888 --no-browser --allow-root
+                    exec $SHELLCMD jupyter-lab --port=8888 --no-browser --allow-root
                     deactivate
                 }
             fi
@@ -26,20 +27,20 @@ case $1 in
                 eval $SHELLCMD $@
             }
 
-            function make {
+            function tclbmake {
                 MYPATH=$(pwd)
-                echo "Buildpath: " $BUILDPATH
-                eval  cd $BUILDPATH
-                eval  $SHELLCMD make $@
+                echo "TCLB_PATH: " $TCLB_PATH
+                eval  cd $TCLB_PATH
+                eval  scmd make $@
                 eval cd $MYPATH
             }
 
             function tclb() {
-                scmd  $BUILDPATH/CLB/$1/main $2
+                scmd  $TCLB_PATH/CLB/$1/main $2
             }
 
             function tclbmpi() {
-                scmd mpirun $BUILDPATH/CLB/$1/main $2
+                scmd mpirun $TCLB_PATH/CLB/$1/main $2
             }
 
             function R() {
@@ -94,7 +95,7 @@ case $1 in
                     unset -f deactivate
                     unset -f  tclb_setup
                     unset -f  scmd 
-                    unset -f  make 
+                    unset -f  tclbmake 
                     unset -f  tclb
                     unset -f  tclb_help
                     unset -f  tclbmpi
@@ -108,7 +109,7 @@ case $1 in
             export -f deactivate
             export -f  tclb_setup
             export -f  scmd 
-            export -f  make 
+            export -f  tclbmake 
             export -f  tclb
             export -f  tclb_help
             export -f  tclbmpi

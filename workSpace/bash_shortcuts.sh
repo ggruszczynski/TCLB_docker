@@ -1,17 +1,21 @@
 #!/bin/bash
 
-export TCLBBUILDPATH=`cd ~/TCLB && pwd`
-TCLBTOOLS=`cd ~/TCLB_tools && pwd`
-export PYTHONPATH="$PYTHONPATH:$TCLBTOOLS/Python"
+#export TCLBBUILDPATH=`cd ~/TCLB && pwd`
 
-function tclb() {
-	$TCLBBUILDPATH/CLB/$1/main $2 
+function scmd {
+	eval $@
 }
+export -f scmd
 
-function tclbmpi() {
-	mpirun $TCLBBUILDPATH/CLB/$1/main $2 
-}
 
-export -f tclb
-export -f tclbmpi
+# function tclb() {
+# 	$TCLBBUILDPATH/CLB/$1/main $2 
+# }
+
+# function tclbmpi() {
+# 	mpirun $TCLBBUILDPATH/CLB/$1/main $2 
+# }
+
+# export -f tclb
+# export -f tclbmpi
 

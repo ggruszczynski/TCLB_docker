@@ -7,7 +7,8 @@ activate:
 
 $(localdir)/config_all:
 	mkdir -p $(localdir)
-	echo "export BUILDPATH=path_to_your_TCLB_dir" > "$(localdir)/config_all"
+	echo "export TCLB_PATH=path_to_your_TCLB_dir" > "$(localdir)/config_all"
+	echo "export TCLB_TOOLS_PATH=path_to_your_TCLB_tools_dir" >> "$(localdir)/config_all"
 
 $(localdir)/tclb_%:
 	singularity build $@ docker://mdzik/$$(echo $@ | sed 's/__/:/g' | sed 's/.*\///g')
