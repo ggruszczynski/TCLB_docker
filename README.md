@@ -24,7 +24,7 @@ and you are good to go
 source /path/to/TCLB_docker/activate workspace_cpu
 cd $TCLBBUILDPATH
 scmd ./configure $CONFIGUREARGS 
-make d2q9
+tclbmake d2q9
 tclb d2q9 ./examples/flow/karman.xml
 ```
 - Keep in mind that Singularity will include in your env directories below  PWD, not necessary home.
