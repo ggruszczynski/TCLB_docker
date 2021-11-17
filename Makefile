@@ -50,4 +50,5 @@ workspace_cpu: configureargs = --disable-cuda --with-python --with-python-config
 	ln -fs  config_$(imname)__$(imtag)  $(localdir)/config_$@
 
 clean:
-	mkdir -rf ./$(localdir)
+	rm -rf ./$(localdir)
+	rm activate
