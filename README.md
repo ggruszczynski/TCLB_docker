@@ -18,13 +18,13 @@ now you need to set path to your TCLB clone repo (cloned fork probably)
 ```
 make clean
 make activate
-$EDITOR .local/config_all
+editor .local/config_all
 
 ```
 and you are good to go
 ```
 source /path/to/TCLB_docker/activate workspace_cpu
-cd $TCLBBUILDPATH
+cd $TCLB_PATH
 scmd ./configure $CONFIGUREARGS 
 tclbmake d2q9
 tclb d2q9 ./examples/flow/karman.xml
