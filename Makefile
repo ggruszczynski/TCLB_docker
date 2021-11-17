@@ -1,6 +1,6 @@
 localdir = .local
 
-activate:
+activate: $(localdir)/config_all
 	echo "#!/bin/bash" > "activate"
 	echo ENVDIR=$$(pwd) >> "activate"
 	cat ./activate.template >> "activate"
