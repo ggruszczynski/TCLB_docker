@@ -23,7 +23,7 @@ editor .local/config_all
 ```
 and you are good to go
 ```
-source /path/to/TCLB_docker/activate workspace_cpu
+source activate workspace_cpu
 cd $TCLB_PATH
 scmd ./configure $CONFIGUREARGS 
 tclbmake d2q9
