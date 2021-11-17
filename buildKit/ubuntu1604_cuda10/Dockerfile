@@ -13,7 +13,7 @@ RUN apt-get -y install apt-transport-https ca-certificates gnupg software-proper
 RUN wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /etc/apt/trusted.gpg.d/kitware.gpg >/dev/null
 RUN apt-add-repository 'deb https://apt.kitware.com/ubuntu/ xenial main'
 RUN apt-get -y update
-RUN apt-get -y install cmake
+RUN apt-get -y install cmake freeglut3-dev
 
 
 RUN cd /opt && git clone https://github.com/mdzik/TCLB_singularity
