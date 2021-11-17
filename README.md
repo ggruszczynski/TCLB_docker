@@ -16,8 +16,9 @@ cd TCLB_docker
 ```
 now you need to set path to your TCLB clone repo (cloned fork probably)
 ```
-echo TCLBBUILDPATH=path/to/TCLB > .local/config_all
 make activate
+$EDITOR .local/config_all
+
 ```
 and you are good to go
 ```
