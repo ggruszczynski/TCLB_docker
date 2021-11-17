@@ -39,9 +39,9 @@ case $1 in
                 scmd  $TCLB_PATH/CLB/$1/main $2
             }
 
-            function tclbmpi() {
-                scmd mpirun $TCLB_PATH/CLB/$1/main $2
-            }
+#            function tclbmpi() { automade version is OPENMP-based, this does not work
+#                scmd mpirun $TCLB_PATH/CLB/$1/main $2
+#            }
 
             function R() {
                 scmd R "$0"
@@ -161,7 +161,7 @@ case $1 in
         fi
     ;;
     *)
-    echo "Options: workspace, buildkit_cpu, buildkit_gpu"
+    echo "Options: workspace_cpu, buildkit_cpu, buildkit_gpu"
     
 esac
 
