@@ -1,6 +1,6 @@
 
 case $1 in
-    "workspace_cpu" | "buildkit_cpu" | "buildkit_gpu")    
+    "workspace_cpu" | "buildkit_cpu" | "buildkit_gpu" | "buildkit_gpu_graphics")    
         echo "Activating $1 TCLB Environment"
         WD=$(pwd)
         echo $WD
@@ -11,8 +11,12 @@ case $1 in
             . .local/config_$1
             export PYTHONPATH="$PYTHONPATH:$TCLB_TOOLS_PATH/Python"
 
-            SHELLCMD="singularity exec $SIF "
-
+            if [[ $1 == *"_gpu"* ]]; then
+                SHELLCMD="singularity exec --nv $SIF "
+            else
+                SHELLCMD="singularity exec  $SIF "
+            fi
+            
             if [[ "$1" == "workspace_cpu" ]];
             then
                 function jupyterlab() {
@@ -48,6 +52,7 @@ case $1 in
             }
 
             function tclb_help() {
+                echo ""
                 echo "scmd COMMAND - run COMMAND inside TCLB singularity environment"
                 echo "tclb MODEL FILE ARGS - run CLB/MODEL/main FILE ARGS inside TCLB singularity environment"
                 #echo "tclbmpi MODEL FILE ARGS - run mpirun CLB/MODEL/main FILE ARGS inside TCLB singularity environment"
@@ -155,14 +160,9 @@ case $1 in
             tclb_help
 
             cd $WD
-
-
-
         fi
     ;;
     *)
-    echo "Options: workspace_cpu, buildkit_cpu, buildkit_gpu"
+    echo "Options: workspace_cpu, buildkit_cpu, buildkit_gpu, buildkit_gpu_graphics"
     
 esac
-
-
