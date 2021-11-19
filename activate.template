@@ -1,6 +1,6 @@
 
 case $1 in
-    "workspace_cpu" | "buildkit_cpu" | "buildkit_gpu" | "buildkit_gpu_graphics")    
+    "workspace_cpu" | "buildkit_cpu" | "buildkit_gpu" | "buildkit_graphics_gpu")    
         echo "Activating $1 TCLB Environment"
         WD=$(pwd)
         echo $WD
@@ -163,6 +163,6 @@ case $1 in
         fi
     ;;
     *)
-    echo "Options: workspace_cpu, buildkit_cpu, buildkit_gpu, buildkit_gpu_graphics"
+    echo "Options: workspace_cpu, buildkit_cpu, buildkit_gpu, buildkit_graphics_gpu"
     
 esac
