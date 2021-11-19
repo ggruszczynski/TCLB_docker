@@ -141,14 +141,14 @@ case $1 in
             if [ -n "${BASH:-}" -o -n "${ZSH_VERSION:-}" ] ; then
                 hash -r 2> /dev/null
             fi
-            echo "======================================================================"
-            echo "Remember to put path to TCLB source code into .local/config_all file!!"
-            echo "======================================================================"
+            echo "======================================================================="
+            echo "Remember to put path to TCLB source code into .local/config_all file!!!"
+            echo "======================================================================="
            
             if [[ "$1" == "workspace_cpu" ]];
             then
                 echo "======================================================================"
-                echo "This is WorkSpace edition: juperlab command is avalible"
+                echo "This is WorkSpace edition: jupyterlab command is available"
                 echo "======================================================================"
             fi
 
