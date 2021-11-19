@@ -39,9 +39,9 @@ case $1 in
                 scmd  $TCLB_PATH/CLB/$1/main $2
             }
 
-            function tclbmpi() {
-                scmd mpirun $TCLB_PATH/CLB/$1/main $2
-            }
+#            function tclbmpi() { automade version is OPENMP-based, this does not work
+#                scmd mpirun $TCLB_PATH/CLB/$1/main $2
+#            }
 
             function R() {
                 scmd R "$0"
@@ -50,9 +50,9 @@ case $1 in
             function tclb_help() {
                 echo "scmd COMMAND - run COMMAND inside TCLB singularity environment"
                 echo "tclb MODEL FILE ARGS - run CLB/MODEL/main FILE ARGS inside TCLB singularity environment"
-                echo "tclbmpi MODEL FILE ARGS - run mpirun CLB/MODEL/main FILE ARGS inside TCLB singularity environment"
+                #echo "tclbmpi MODEL FILE ARGS - run mpirun CLB/MODEL/main FILE ARGS inside TCLB singularity environment"
                 echo "R ARGS - run R inside TCLB singularity environment"
-                echo "make ARGS - run make ARGS inside singularity environment in TCLB path (current path is ignored)"
+                echo "tclbmake ARGS - run make ARGS inside singularity environment in TCLB path (current path is ignored)"
                 echo "deactivate - clear environment"
                 echo "tclb_help - print this message"
 
@@ -93,12 +93,12 @@ case $1 in
                 if [ ! "${1:-}" = "nondestructive" ] ; then
                 # Self destruct!
                     unset -f deactivate
-                    unset -f  tclb_setup
+                   # unset -f  tclb_setup
                     unset -f  scmd 
                     unset -f  tclbmake 
                     unset -f  tclb
                     unset -f  tclb_help
-                    unset -f  tclbmpi
+                    #unset -f  tclbmpi
                     unset -f  R
                 fi
             }
@@ -107,12 +107,12 @@ case $1 in
             deactivate nondestructive
 
             export -f deactivate
-            export -f  tclb_setup
+            #export -f  tclb_setup
             export -f  scmd 
             export -f  tclbmake 
             export -f  tclb
             export -f  tclb_help
-            export -f  tclbmpi
+            #export -f  tclbmpi
             export -f  R
             #VIRTUAL_ENV="/home/mdzik/icm/coldfront-icm/venv/"
             #export VIRTUAL_ENV
@@ -161,7 +161,7 @@ case $1 in
         fi
     ;;
     *)
-    echo "Options: workspace, buildkit_cpu, buildkit_gpu"
+    echo "Options: workspace_cpu, buildkit_cpu, buildkit_gpu"
     
 esac
 

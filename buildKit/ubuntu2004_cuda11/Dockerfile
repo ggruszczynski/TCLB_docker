@@ -10,7 +10,7 @@ ENV ADIOS_PATH=/opt/ADIOS
 
 
 RUN apt-get -y update
-RUN apt-get -y install cmake
+RUN apt-get -y install cmake freeglut3-dev
 RUN cd /opt && wget https://raw.githubusercontent.com/CFD-GO/TCLB/master/tools/install.sh && chmod +x /opt/install.sh
 RUN mkdir /opt/r_libs
 

@@ -1,6 +1,6 @@
 localdir = .local
 
-activate:
+activate: $(localdir)/config_all
 	echo "#!/bin/bash" > "activate"
 	echo ENVDIR=$$(pwd) >> "activate"
 	cat ./activate.template >> "activate"
@@ -27,7 +27,7 @@ build_and_configure_$(imname)__$(imtag):
 
 buildkit_gpu: imname = buildkit
 buildkit_gpu: imtag = ubuntu_2004_cuda11_latest
-buildkit_gpu: configureargs =  --enable-cuda --with-python --with-python-config=python3.8-config --enable-double --enable-keepcode --enable-rinside --enable-cpp11 --with-openmp --with-hdf5 --with-hdf5-lib=//usr/lib/x86_64-linux-gnu/hdf5/openmpi/ --with-hdf5-include=/usr/include/hdf5/openmpi
+buildkit_gpu: configureargs = --enable-cuda --with-cuda-arch=sm_60 --with-python --with-python-config=python3.8-config --enable-double --enable-keepcode --enable-rinside --enable-cpp11 --with-hdf5 --with-hdf5-lib=//usr/lib/x86_64-linux-gnu/hdf5/openmpi/ --with-hdf5-include=/usr/include/hdf5/openmpi
 #buildkit_gpu: build_and_configure_$(imname)__$(imtag)
 	
 
@@ -48,3 +48,7 @@ workspace_cpu: configureargs = --disable-cuda --with-python --with-python-config
 
 %_cpu: build_and_configure_$(imname)__$(imtag)	
 	ln -fs  config_$(imname)__$(imtag)  $(localdir)/config_$@
+
+clean:
+	rm -rf ./$(localdir)
+	rm -f activate

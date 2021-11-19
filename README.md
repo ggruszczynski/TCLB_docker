@@ -16,15 +16,17 @@ cd TCLB_docker
 ```
 now you need to set path to your TCLB clone repo (cloned fork probably)
 ```
-echo TCLBBUILDPATH=path/to/TCLB > .local/config_all
+make clean
 make activate
+editor .local/config_all
+
 ```
 and you are good to go
 ```
-source /path/to/TCLB_docker/activate workspace_cpu
-cd $TCLBBUILDPATH
+source activate workspace_cpu
+cd $TCLB_PATH
 scmd ./configure $CONFIGUREARGS 
-make d2q9
+tclbmake d2q9
 tclb d2q9 ./examples/flow/karman.xml
 ```
 - Keep in mind that Singularity will include in your env directories below  PWD, not necessary home.
